@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d6fdce714eec3428ecb9f2abf21a9f, type: 3}
+  m_Name: Unit_BT_Joakim_Karbing
+  m_EditorClassIdentifier: 
+  m_nodes:
+  - {fileID: 1471635766343065997}
+  - {fileID: 4451576453836264986}
+  - {fileID: 7063223505721710484}
+  m_root: {fileID: 1471635766343065997}
+--- !u!114 &1471635766343065997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fc2f6884b12eca41a3023e55fc994ae, type: 3}
+  m_Name: Root
+  m_EditorClassIdentifier: 
+  m_ID: 0
+  m_vPosition: {x: -4, y: -1}
+  m_child: {fileID: 4451576453836264986}
+--- !u!114 &4451576453836264986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414e0d88516606c468a1c87270dc741d, type: 3}
+  m_Name: Selector
+  m_EditorClassIdentifier: 
+  m_ID: 0
+  m_vPosition: {x: -4.000005, y: 119.30002}
+  m_children: []
+--- !u!114 &7063223505721710484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b55f861dfa223e745b04a492f4967d1e, type: 3}
+  m_Name: Compare
+  m_EditorClassIdentifier: 
+  m_ID: 0
+  m_vPosition: {x: -154, y: 268}
+  m_child: {fileID: 0}
+  m_key: VariableName
+  m_operator: 3
+  m_iValue: 5

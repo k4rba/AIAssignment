@@ -4,12 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FirstName_LastName
+namespace Joakim_Karbing
 {
-    public class Team_FirstName_LastName : Team
+    public class Team_Joakim_Karbing : Team
     {
         [SerializeField]
         private Color   m_myFancyColor;
+
+        public List<Unit_Joakim_Karbing> m_joakimUnits;
+
+        public Unit_Joakim_Karbing m_teamCaptain;
 
         #region Properties
 
