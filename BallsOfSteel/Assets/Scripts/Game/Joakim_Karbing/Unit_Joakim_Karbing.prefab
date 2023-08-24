@@ -485,6 +485,7 @@ GameObject:
   - component: {fileID: 323099602114071372}
   - component: {fileID: 6901311057929576710}
   - component: {fileID: 5314277297386817821}
+  - component: {fileID: 4229024017306307753}
   m_Layer: 0
   m_Name: Unit_Joakim_Karbing
   m_TagString: Untagged
@@ -575,6 +576,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e207559c56faafc478fb15e5a6fa634b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4229024017306307753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6276959679974466529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e01b37e652caa34fb535991c3c4448a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_tree: {fileID: 11400000, guid: 323b033fe875ff64b9db13035b1d4438, type: 2}
 --- !u!1 &6721464183920216800
 GameObject:
   m_ObjectHideFlags: 0

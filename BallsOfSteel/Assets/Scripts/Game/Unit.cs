@@ -21,7 +21,8 @@ namespace Game
 
         static GameObject           sm_bloodPrefab;
 
-        public const int            MAX_HP = 3;
+        //todo: change hp back to 3
+        public const int            MAX_HP = 1;
         public const float          FIRE_RANGE = 10.0f;
         public const float          FIRE_COOLDOWN_TIME = 0.5f;
         public const float          DAMAGE = 0.1f;
