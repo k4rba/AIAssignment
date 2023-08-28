@@ -56,6 +56,7 @@ namespace Game
                     if (iLoser >= 0)
                     {
                         winner = teams[(iLoser + 1) % teams.Length];
+                        Debug.Log("Winner is: " + winner.name);
                         break;
                     }
 
