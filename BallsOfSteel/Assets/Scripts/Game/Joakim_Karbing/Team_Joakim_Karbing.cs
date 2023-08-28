@@ -17,7 +17,7 @@ namespace Joakim_Karbing {
 
         public Battlefield.Node m_teamCaptainTargetNode;
 
-        
+
         //unit 0 is always the captain for simplicity
         private void ChooseNewCaptain() {
             if (m_joakimUnits[0] != null) {
@@ -26,6 +26,7 @@ namespace Joakim_Karbing {
         }
 
         #region Properties
+
         public Unit_Joakim_Karbing TeamCaptain {
             get {
                 ChooseNewCaptain();
@@ -49,21 +50,17 @@ namespace Joakim_Karbing {
                 return null;
             }
 
-            // initialize pathfinding
             foreach (Battlefield.Node node in Battlefield.Instance.Nodes) {
                 node?.ResetPathfinding();
             }
 
-            // add start node
             start.m_fDistance = 0.0f;
             start.m_fRemainingDistance = Battlefield.Instance.Heuristic(goal, start);
             List<Battlefield.Node> open = new List<Battlefield.Node>();
             HashSet<Battlefield.Node> closed = new HashSet<Battlefield.Node>();
             open.Add(start);
 
-            // search
             while (open.Count > 0) {
-                // get next node (the one with the least remaining distance)
                 Battlefield.Node current = open[0];
                 for (int i = 1; i < open.Count; ++i) {
                     if (open[i].m_fRemainingDistance < current.m_fRemainingDistance) {
@@ -74,16 +71,14 @@ namespace Joakim_Karbing {
                 open.Remove(current);
                 closed.Add(current);
 
-                // found goal?
                 if (current == goal) {
-                    // construct path
                     GraphUtils.Path path = new GraphUtils.Path();
                     while (current != null) {
                         path.Add(current.m_parentLink);
                         current = current != null && current.m_parentLink != null ? current.m_parentLink.Source : null;
                     }
 
-                    path.RemoveAll(l => l == null); // HACK: check if path contains null links
+                    path.RemoveAll(l => l == null);
                     path.Reverse();
                     return path;
                 }
@@ -100,14 +95,12 @@ namespace Joakim_Karbing {
 
                                 if (open.Contains(target)) {
                                     if (newRemainingDistance < target.m_fRemainingDistance) {
-                                        // re-parent neighbor node
                                         target.m_fRemainingDistance = newRemainingDistance;
                                         target.m_fDistance = newDistance;
                                         target.m_parentLink = link;
                                     }
                                 }
                                 else {
-                                    // add target to openlist
                                     target.m_fRemainingDistance = newRemainingDistance;
                                     target.m_fDistance = newDistance;
                                     target.m_parentLink = link;
@@ -119,7 +112,6 @@ namespace Joakim_Karbing {
                 }
             }
 
-            // no path found :(
             return null;
         }
     }

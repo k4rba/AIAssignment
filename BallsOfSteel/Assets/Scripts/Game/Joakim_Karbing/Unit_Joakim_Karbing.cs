@@ -17,8 +17,34 @@ namespace Joakim_Karbing {
 
         #endregion
 
+
+        //always target enemy with least health, and preferebly one that isnt standing behind cover
         protected override Unit SelectTarget(List<Unit> enemiesInRange) {
-            return enemiesInRange[Random.Range(0, enemiesInRange.Count)];
+            if (enemiesInRange != null && enemiesInRange.Count > 0) {
+            }
+
+            Unit enemyToTarget = enemiesInRange[0];
+            float minHealth = enemyToTarget.Health;
+
+            foreach (var enemy in enemiesInRange) {
+                if (enemy.enabled) {
+                    if (enemy.Health < minHealth) {
+                        enemyToTarget = enemy;
+                        minHealth = enemy.Health;
+                    }
+                }
+                if (enemyToTarget.InCover) {
+                    foreach (var alternativeEnemy in enemiesInRange) {
+                        if (alternativeEnemy.enabled) {
+                            if (!alternativeEnemy.InCover) {
+                                enemyToTarget = alternativeEnemy;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return enemyToTarget;
         }
 
         protected override void Start() {
@@ -37,6 +63,8 @@ namespace Joakim_Karbing {
 
         IEnumerator TeamLogic() {
             while (true) {
+                //wonky method for shrinking the team list of units when unit is destroyed. Got (missing game object). I tried everything.
+                //this should happen automatically when using lists (i think) but today it did not. :(
                 foreach (var unit in Team.m_joakimUnits) {
                     if (unit == null) {
                         Team.UnitToRemove.Add(unit);
@@ -49,10 +77,11 @@ namespace Joakim_Karbing {
 
                 Team.UnitToRemove.Clear();
 
-                
+
                 //units follow the current captain around the battlefield to allow ganking, captain is the only unit moving independantly
                 TargetNode = null;
                 yield return new WaitForSeconds(Random.Range(0.2f, 0.4f));
+
 
                 if (this == Team.TeamCaptain) {
                     TargetNode = Battlefield.Instance.GetRandomNode();
