@@ -1,9 +1,10 @@
-using System;
 using Game;
 using Graphs;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
 
 namespace Joakim_Karbing {
     public class Team_Joakim_Karbing : Team {
@@ -17,6 +18,16 @@ namespace Joakim_Karbing {
 
         public Battlefield.Node m_teamCaptainTargetNode;
 
+        public Dictionary<Battlefield.Node, float> coverLookup = new Dictionary<Battlefield.Node, float>();
+
+        private static readonly Vector2Int[] sm_coverDirections = new Vector2Int[]
+            { new Vector2Int(1, 0), new Vector2Int(-1, 0), new Vector2Int(0, 1), new Vector2Int(0, -1) };
+
+
+        protected override void Start() {
+            base.Start();
+            StartCoroutine(UpdateCovers());
+        }
 
         //unit 0 is always the captain for simplicity
         private void ChooseNewCaptain() {
@@ -38,10 +49,42 @@ namespace Joakim_Karbing {
 
         #endregion
 
-        private void Awake() {
-            Time.timeScale = 3;
+        //keep covers relevant
+        IEnumerator UpdateCovers() {
+            while (true) {
+                FindAllCovers(EnemyTeam.Units.ToList());
+                yield return null;
+            }
         }
 
+        //logic to know where covers are (Im looking for where enemies can hide, to know if i should shoot them or choose another target in range without cover)
+        public void FindAllCovers(List<Unit> opposingTeam) {
+            foreach (var node in Battlefield.Instance.Nodes) {
+                if (node is Battlefield.Node castedNode) {
+                    float score = 0.0f;
+                    if (opposingTeam.Any()) {
+                        foreach (var unit in opposingTeam) {
+                            Vector3 dirToUnit = Vector3.Normalize(unit.transform.position - castedNode.WorldPosition);
+                            foreach (var dir in sm_coverDirections) {
+                                if (Battlefield.Instance[castedNode.Position + dir] is Node_Rock rock) {
+                                    Vector3 dirToCover =
+                                        Vector3.Normalize(rock.WorldPosition - castedNode.WorldPosition);
+                                    score += Vector3.Dot(dirToUnit, dirToCover);
+                                }
+                            }
+                        }
+                    }
+
+                    if (score > 0) {
+                        if (!coverLookup.ContainsKey(castedNode)) {
+                            coverLookup.Add(castedNode, score / opposingTeam.Count);
+                        }
+                    }
+                }
+            }
+        }
+
+        //i shamelessly copy pasted this with the addition of + target.AdditionalCost on newDistance to avoid mud;
         public GraphUtils.Path GetMyShortestPath(Battlefield.Node start, Battlefield.Node goal) {
             if (start == null ||
                 goal == null ||
